@@ -33,12 +33,16 @@ fun AppOutlinedTextField(
     charLimit: Int? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = false,
-    errorMessage: String = if (value.isNotEmpty()) stringResource(id = R.string.common_text_field_error_message) else stringResource(
-        id = R.string.common_empty_text_field_error_message
-    ),
+    errorMessage: String? = null,
     supportingText: String? = null,
     label: @Composable (() -> Unit)? = null
 ) {
+    val getErrorMessage: @Composable () -> String = {
+        errorMessage
+            ?: if (value.isNotEmpty()) stringResource(id = R.string.common_text_field_error_message) else stringResource(
+                id = R.string.common_empty_text_field_error_message
+            )
+    }
     OutlinedTextField(
         value = value,
         onValueChange = { text ->
@@ -51,7 +55,7 @@ fun AppOutlinedTextField(
         trailingIcon = trailingIcon,
         isError = isError,
         supportingText = {
-            if (isError) Text(text = errorMessage) else {
+            if (isError) Text(text = getErrorMessage()) else {
                 charLimit?.let { charLimit ->
                     if (value.isNotEmpty()) Text(
                         text = stringResource(
@@ -82,8 +86,8 @@ fun AppOutlinedTextFieldPrev() {
         var text by remember { mutableStateOf("") }
         val isError: @Composable () -> Boolean = {
             text.isDigitsOnly() && text.isNotEmpty()
-    }
-            Surface {
+        }
+        Surface {
             AppOutlinedTextField(
                 value = text,
                 isError = isError(),

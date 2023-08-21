@@ -18,9 +18,10 @@ import com.example.valorgasto.ui.theme.ValorGastoTheme
 @Composable
 fun AppExposedDropdownMenuBox(
     selectedItem: String,
-    onSelectItem: (String) -> Unit,
+    onItemSelection: (String) -> Unit,
     selectionChoices: List<String>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    label: @Composable (() -> Unit)? = null
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     ExposedDropdownMenuBox(
@@ -28,18 +29,19 @@ fun AppExposedDropdownMenuBox(
         onExpandedChange = { isExpanded = !isExpanded },
         modifier = modifier
     ) {
-        AppTextField(
+        AppOutlinedTextField(
             value = selectedItem,
             onValueChange = {},
             readOnly = true,
+            label = label,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
-            modifier = Modifier.menuAnchor()
+            modifier = modifier.menuAnchor()
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             selectionChoices.forEach { item ->
-                DropdownMenuItem(text = { Text(text = item) }, onClick = { onSelectItem(item)
+                DropdownMenuItem(text = { Text(text = item) }, onClick = { onItemSelection(item)
                 isExpanded = false})
             }
         }
@@ -54,7 +56,7 @@ fun AppExposedDropdownMenuBoxPrev() {
         var selected by remember { mutableStateOf(selectionChoices.random()) }
         AppExposedDropdownMenuBox(
             selectedItem = selected,
-            onSelectItem = { selected = it },
+            onItemSelection = { selected = it },
             selectionChoices = selectionChoices
         )
     }

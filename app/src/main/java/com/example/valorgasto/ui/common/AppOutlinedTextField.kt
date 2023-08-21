@@ -28,14 +28,15 @@ fun AppOutlinedTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable() (() -> Unit)? = null,
+    trailingIcon: @Composable() (() -> Unit)? = null,
     charLimit: Int? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = false,
     errorMessage: String? = null,
     supportingText: String? = null,
-    label: @Composable (() -> Unit)? = null
+    label: @Composable() (() -> Unit)? = null,
+    readOnly: Boolean = false
 ) {
     val getErrorMessage: @Composable () -> String = {
         errorMessage
@@ -45,6 +46,7 @@ fun AppOutlinedTextField(
     }
     OutlinedTextField(
         value = value,
+        readOnly = readOnly,
         onValueChange = { text ->
             charLimit?.let { charLimit ->
                 if (text.length <= charLimit) onValueChange(text)
@@ -90,12 +92,13 @@ fun AppOutlinedTextFieldPrev() {
         Surface {
             AppOutlinedTextField(
                 value = text,
-                isError = isError(),
                 onValueChange = { text = it },
                 modifier = Modifier.padding(18.dp),
-                label = { Text(text = "Label de teste") },
+                isError = isError(),
+                charLimit = 10,
                 supportingText = "Texto de suporte de teste",
-                charLimit = 10
+                label = { Text(text = "Label de teste") },
+                readOnly = true
             )
         }
     }

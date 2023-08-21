@@ -50,14 +50,8 @@ fun AppOutlinedTextFieldWithSelection(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
-        leadingIcon = leadingIcon,
         isError = isError,
-        errorMessage = errorMessage,
-        charLimit = charLimit,
-        keyboardOptions = keyboardOptions,
-        supportingText = supportingText,
-        singleLine = singleLine,
-        label = label,
+        leadingIcon = leadingIcon,
         trailingIcon = {
 
             val iconRotation by animateFloatAsState(
@@ -86,7 +80,13 @@ fun AppOutlinedTextFieldWithSelection(
                     }
                 }
             }
-        }
+        },
+        charLimit = charLimit,
+        keyboardOptions = keyboardOptions,
+        singleLine = singleLine,
+        errorMessage = errorMessage,
+        supportingText = supportingText,
+        label = label
     )
 }
 

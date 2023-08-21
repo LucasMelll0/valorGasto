@@ -41,7 +41,8 @@ fun AppTextField(
         id = R.string.common_empty_text_field_error_message
     ),
     supportingText: String? = null,
-    label: @Composable (() -> Unit)? = null
+    label: @Composable (() -> Unit)? = null,
+    readOnly: Boolean = false
 ) {
     TextField(
         value = value,
@@ -50,6 +51,7 @@ fun AppTextField(
                 if (text.length <= charLimit) onValueChange(text)
             } ?: onValueChange(text)
         },
+        readOnly = readOnly,
         modifier = modifier,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,

@@ -5,4 +5,39 @@
     <string name="common_text_field_char_limit_text_place_holder">Limite: %d/%d</string>
     <string name="common_text_field_error_message">Verifique este campo!</string>
     <string name="common_empty_text_field_error_message">Este campo não pode ficar vazio!</string>
+    <string name="common_confirm">Confirmar</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_error_message">Ocorreu um erro!</string>
+
+    <!-- Units of Measurement -->
+    <string name="unit_of_measurement_kilogram">Kg</string>
+    <string name="unit_of_measurement_gram">g</string>
+    <string name="unit_of_measurement_milligram">mg</string>
+    <string name="unit_of_measurement_unit">Unid</string>
+    <string name="unit_of_measurement_liter">L</string>
+    <string name="unit_of_measurement_milliliter">ml</string>
+
+    <!-- Product Categories -->
+    <string name="product_category_fruits">Frutas</string>
+    <string name="product_category_vegetables">Vegetais</string>
+    <string name="product_category_meats">Carnes</string>
+    <string name="product_category_frozen">Congelados</string>
+    <string name="product_category_Snacks">Salgadinhos</string>
+    <string name="product_category_Candies">Doces</string>
+    <string name="product_category_Cleaning">Limpeza</string>
+    <string name="product_category_hygiene">Higiene</string>
+    <string name="product_category_drinks">Bebidas</string>
+    <string name="product_category_bakery">Padaria</string>
+    <string name="product_category_pets">Produtos para animais</string>
+    <string name="product_category_health">Saúde</string>
+    <string name="product_category_electronics">Eletrônicos</string>
+    <string name="product_category_garden">Jardim</string>
+    <string name="product_category_others">Outros</string>
+
+    <!-- Product Form -->
+    <string name="product_form_title">Novo Produto</string>
+    <string name="product_form_name_label">Nome do Produto</string>
+    <string name="product_form_quantity_label">Quantidade</string>
+    <string name="product_form_price_label">Preço</string>
+    <string name="product_form_category_label">Categoria do Produto</string>
 </resources>

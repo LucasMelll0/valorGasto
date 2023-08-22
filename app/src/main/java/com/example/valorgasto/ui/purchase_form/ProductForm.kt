@@ -17,7 +17,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -55,12 +54,15 @@ fun ProductForm(
     ) {
         val context = LocalContext.current
         var productName by rememberSaveable { mutableStateOf("") }
-        var productNameHasError by remember { mutableStateOf(false) }
+        var productNameTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
+        val productNameHasError = productName.isEmpty() && productNameTextFieldHasBeenUsed
         var productQuantity by rememberSaveable { mutableStateOf("") }
-        var productQuantityHasError by remember { mutableStateOf(false) }
+        var productQuantityTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
+        val productQuantityHasError = productQuantity.isEmpty() && productQuantityTextFieldHasBeenUsed
         var selectedUnitOfMeasurement by rememberSaveable { mutableStateOf(UnitOfMeasurement.values()[0]) }
         var productPrice by rememberSaveable { mutableStateOf("") }
-        var productPriceHasError by remember { mutableStateOf(false) }
+        var productPriceTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
+        val productPriceHasError = productPrice.isEmpty() && productPriceTextFieldHasBeenUsed
         var selectedCategory by rememberSaveable { mutableStateOf(ProductCategories.values()[0]) }
 
         Card(
@@ -80,7 +82,10 @@ fun ProductForm(
                 )
                 AppOutlinedTextField(
                     value = productName,
-                    onValueChange = { productName = it },
+                    onValueChange = {
+                        productName = it
+                        productNameTextFieldHasBeenUsed = true
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     charLimit = 30,
                     singleLine = true,
@@ -89,7 +94,12 @@ fun ProductForm(
                 )
                 AppOutlinedTextFieldWithSelection(
                     value = productQuantity,
-                    onValueChange = { if(it.isDigitsOnly()) productQuantity = it },
+                    onValueChange = {
+                        if (it.isDigitsOnly()) {
+                            productQuantity = it
+                            productQuantityTextFieldHasBeenUsed = true
+                        }
+                    },
                     isError = productQuantityHasError,
                     selectedItem = stringResource(id = selectedUnitOfMeasurement.getStringRes()),
                     selectionChoices = UnitOfMeasurement.values()
@@ -107,7 +117,12 @@ fun ProductForm(
                 )
                 AppOutlinedTextField(
                     value = productPrice,
-                    onValueChange = { if (it.isDigitsOnly()) productPrice = it },
+                    onValueChange = {
+                        if (it.isDigitsOnly()) {
+                            productPrice = it
+                            productPriceTextFieldHasBeenUsed = true
+                        }
+                    },
                     isError = productPriceHasError,
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = { Text(text = "R$") },
@@ -140,11 +155,9 @@ fun ProductForm(
                         Text(text = stringResource(id = R.string.common_cancel))
                     }
                     TextButton(onClick = {
-                        productNameHasError = productName.isEmpty()
-                        productQuantityHasError = productQuantity.isEmpty()
-                        productPriceHasError = productPrice.isEmpty()
-                        val hasError =
-                            productNameHasError || productQuantityHasError || productPriceHasError
+                        val hasError = (productNameHasError || !productNameTextFieldHasBeenUsed) ||
+                                (productQuantityHasError || !productQuantityTextFieldHasBeenUsed) ||
+                                (productPriceHasError || !productPriceTextFieldHasBeenUsed)
                         if (!hasError) {
                             try {
                                 val product = Product(
@@ -165,6 +178,10 @@ fun ProductForm(
                                 )
                                     .show()
                             }
+                        } else {
+                            productNameTextFieldHasBeenUsed = true
+                            productQuantityTextFieldHasBeenUsed = true
+                            productPriceTextFieldHasBeenUsed = true
                         }
 
                     }) {

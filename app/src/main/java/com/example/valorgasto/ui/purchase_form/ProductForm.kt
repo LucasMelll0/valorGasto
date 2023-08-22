@@ -1,5 +1,6 @@
 package com.example.valorgasto.ui.purchase_form
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +29,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.text.isDigitsOnly
 import com.example.valorgasto.R
 import com.example.valorgasto.model.Product
 import com.example.valorgasto.ui.common.AppExposedDropdownMenuBox
 import com.example.valorgasto.ui.common.AppOutlinedTextField
 import com.example.valorgasto.ui.common.AppOutlinedTextFieldWithSelection
 import com.example.valorgasto.ui.theme.ValorGastoTheme
+import com.example.valorgasto.utils.CurrencyAmountInputVisualTransformation
 import com.example.valorgasto.utils.ProductCategories
 import com.example.valorgasto.utils.UnitOfMeasurement
 
@@ -81,11 +84,13 @@ fun ProductForm(
                     modifier = Modifier.fillMaxWidth(),
                     charLimit = 30,
                     singleLine = true,
+                    isError = productNameHasError,
                     label = { Text(text = stringResource(id = R.string.product_form_name_label)) },
                 )
                 AppOutlinedTextFieldWithSelection(
                     value = productQuantity,
                     onValueChange = { productQuantity = it },
+                    isError = productQuantityHasError,
                     selectedItem = stringResource(id = selectedUnitOfMeasurement.getStringRes()),
                     selectionChoices = UnitOfMeasurement.values()
                         .map { stringResource(id = it.getStringRes()) },
@@ -102,11 +107,13 @@ fun ProductForm(
                 )
                 AppOutlinedTextField(
                     value = productPrice,
-                    onValueChange = { productPrice = it },
+                    onValueChange = { if (it.isDigitsOnly()) productPrice = it },
+                    isError = productPriceHasError,
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = { Text(text = "R$") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     label = { Text(text = stringResource(id = R.string.product_form_price_label)) },
+                    visualTransformation = CurrencyAmountInputVisualTransformation()
                 )
                 AppExposedDropdownMenuBox(
                     label = { Text(text = stringResource(id = R.string.product_form_category_label)) },
@@ -144,10 +151,11 @@ fun ProductForm(
                                     name = productName,
                                     quantity = productQuantity.toDouble(),
                                     unitOfMeasurement = selectedUnitOfMeasurement,
-                                    price = productPrice.toDouble(),
+                                    price = productPrice.toLong(),
                                     category = selectedCategory
                                 )
                                 onConfirm(product)
+                                Log.d("TAG", "ProductForm: $product")
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 Toast.makeText(

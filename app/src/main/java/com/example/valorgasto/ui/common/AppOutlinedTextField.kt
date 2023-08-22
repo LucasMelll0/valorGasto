@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
@@ -36,7 +37,8 @@ fun AppOutlinedTextField(
     errorMessage: String? = null,
     supportingText: String? = null,
     label: @Composable (() -> Unit)? = null,
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     val getErrorMessage: @Composable () -> String = {
         errorMessage
@@ -46,12 +48,13 @@ fun AppOutlinedTextField(
     }
     OutlinedTextField(
         value = value,
-        readOnly = readOnly,
         onValueChange = { text ->
             charLimit?.let { charLimit ->
                 if (text.length <= charLimit) onValueChange(text)
             } ?: onValueChange(text)
         },
+        visualTransformation = visualTransformation,
+        readOnly = readOnly,
         modifier = modifier,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,

@@ -89,7 +89,7 @@ fun ProductForm(
                 )
                 AppOutlinedTextFieldWithSelection(
                     value = productQuantity,
-                    onValueChange = { productQuantity = it },
+                    onValueChange = { if(it.isDigitsOnly()) productQuantity = it },
                     isError = productQuantityHasError,
                     selectedItem = stringResource(id = selectedUnitOfMeasurement.getStringRes()),
                     selectionChoices = UnitOfMeasurement.values()
@@ -102,7 +102,7 @@ fun ProductForm(
                         }
                     },
                     label = { Text(text = stringResource(id = R.string.product_form_quantity_label)) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     modifier = Modifier.fillMaxWidth()
                 )
                 AppOutlinedTextField(
@@ -149,7 +149,7 @@ fun ProductForm(
                             try {
                                 val product = Product(
                                     name = productName,
-                                    quantity = productQuantity.toDouble(),
+                                    quantity = productQuantity.toInt(),
                                     unitOfMeasurement = selectedUnitOfMeasurement,
                                     price = productPrice.toLong(),
                                     category = selectedCategory

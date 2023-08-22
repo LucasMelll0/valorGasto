@@ -66,7 +66,7 @@ fun ProductForm(
         var selectedCategory by rememberSaveable { mutableStateOf(ProductCategories.values()[0]) }
 
         Card(
-            modifier = modifier.padding(dimensionResource(id = R.dimen.default_padding)),
+            modifier = modifier.padding(dimensionResource(id = R.dimen.large_padding)),
             shape = MaterialTheme.shapes.extraLarge
         ) {
             Column(
@@ -77,7 +77,7 @@ fun ProductForm(
             ) {
                 Text(
                     text = stringResource(id = R.string.product_form_title),
-                    style = MaterialTheme.typography.displaySmall,
+                    style = MaterialTheme.typography.displaySmall.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.large_padding))
                 )
                 AppOutlinedTextField(

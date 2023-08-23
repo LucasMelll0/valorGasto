@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.valorgasto.ui.theme.ValorGastoTheme
@@ -41,7 +43,8 @@ fun AppOutlinedTextFieldTrailingMenu(
     supportingText: String? = null,
     singleLine: Boolean = false,
     label: @Composable (() -> Unit)? = null,
-
+    showSelectedOptionText: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
     ) {
 
     var showExpandedDropdownMenu by remember { mutableStateOf(false) }
@@ -58,10 +61,10 @@ fun AppOutlinedTextFieldTrailingMenu(
                 targetValue = if (!showExpandedDropdownMenu) 0f else 180f,
                 label = ""
             )
-            Column {
+            Column(Modifier.wrapContentWidth()) {
                 IconButton(onClick = { showExpandedDropdownMenu = !showExpandedDropdownMenu }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = selectedItem)
+                        if (!showSelectedOptionText) Text(text = selectedItem)
                         Icon(
                             imageVector = Icons.Filled.ArrowDropDown,
                             contentDescription = null,
@@ -86,7 +89,8 @@ fun AppOutlinedTextFieldTrailingMenu(
         singleLine = singleLine,
         errorMessage = errorMessage,
         supportingText = supportingText,
-        label = label
+        label = label,
+        visualTransformation = visualTransformation
     )
 }
 

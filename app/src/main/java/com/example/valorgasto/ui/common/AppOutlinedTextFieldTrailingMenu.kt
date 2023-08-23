@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.example.valorgasto.ui.theme.ValorGastoTheme
 
 @Composable
-fun AppOutlinedTextFieldWithSelection(
+fun AppOutlinedTextFieldTrailingMenu(
     value: String,
     onValueChange: (String) -> Unit,
     selectedItem: String,
@@ -98,7 +98,7 @@ fun AppOutlinedTextFieldWithSelectionPrev() {
             val selectionChoices = listOf("Kg", "g", "L", "ml")
             var selectedItem by remember { mutableStateOf(selectionChoices[0]) }
             var text by remember { mutableStateOf("") }
-            AppOutlinedTextFieldWithSelection(
+            AppOutlinedTextFieldTrailingMenu(
                 value = text,
                 onValueChange = { text = it },
                 modifier = Modifier.padding(18.dp),

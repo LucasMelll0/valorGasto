@@ -33,8 +33,9 @@ import com.example.valorgasto.R
 import com.example.valorgasto.model.Product
 import com.example.valorgasto.ui.common.AppExposedDropdownMenuBox
 import com.example.valorgasto.ui.common.AppOutlinedTextField
-import com.example.valorgasto.ui.common.AppOutlinedTextFieldWithSelection
+import com.example.valorgasto.ui.common.AppOutlinedTextFieldTrailingMenu
 import com.example.valorgasto.ui.theme.ValorGastoTheme
+import com.example.valorgasto.utils.Currency
 import com.example.valorgasto.utils.CurrencyAmountInputVisualTransformation
 import com.example.valorgasto.utils.ProductCategories
 import com.example.valorgasto.utils.UnitOfMeasurement
@@ -58,10 +59,12 @@ fun ProductForm(
         val productNameHasError = productName.isEmpty() && productNameTextFieldHasBeenUsed
         var productQuantity by rememberSaveable { mutableStateOf("") }
         var productQuantityTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
-        val productQuantityHasError = productQuantity.isEmpty() && productQuantityTextFieldHasBeenUsed
+        val productQuantityHasError =
+            productQuantity.isEmpty() && productQuantityTextFieldHasBeenUsed
         var selectedUnitOfMeasurement by rememberSaveable { mutableStateOf(UnitOfMeasurement.values()[0]) }
         var productPrice by rememberSaveable { mutableStateOf("") }
         var productPriceTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
+        var selectedCurrency by rememberSaveable { mutableStateOf(Currency.values()[0]) }
         val productPriceHasError = productPrice.isEmpty() && productPriceTextFieldHasBeenUsed
         var selectedCategory by rememberSaveable { mutableStateOf(ProductCategories.values()[0]) }
 
@@ -92,7 +95,7 @@ fun ProductForm(
                     isError = productNameHasError,
                     label = { Text(text = stringResource(id = R.string.product_form_name_label)) },
                 )
-                AppOutlinedTextFieldWithSelection(
+                AppOutlinedTextFieldTrailingMenu(
                     value = productQuantity,
                     onValueChange = {
                         if (it.isDigitsOnly()) {
@@ -115,7 +118,7 @@ fun ProductForm(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     modifier = Modifier.fillMaxWidth()
                 )
-                AppOutlinedTextField(
+                AppOutlinedTextFieldTrailingMenu(
                     value = productPrice,
                     onValueChange = {
                         if (it.isDigitsOnly()) {
@@ -123,12 +126,22 @@ fun ProductForm(
                             productPriceTextFieldHasBeenUsed = true
                         }
                     },
+                    selectedItem = selectedCurrency.toString(),
+                    onItemSelection = { selected ->
+                        Currency.values().find {
+                            it.toString() == selected
+                        }?.let {
+                            selectedCurrency = it
+                        }
+                    },
+                    selectionChoices = Currency.values().map { it.toString() },
                     isError = productPriceHasError,
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Text(text = "R$") },
+                    leadingIcon = { Text(text = stringResource(id = selectedCurrency.getSymbolStringRes())) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     label = { Text(text = stringResource(id = R.string.product_form_price_label)) },
-                    visualTransformation = CurrencyAmountInputVisualTransformation()
+                    visualTransformation = CurrencyAmountInputVisualTransformation(),
+                    showSelectedOptionText = true
                 )
                 AppExposedDropdownMenuBox(
                     label = { Text(text = stringResource(id = R.string.product_form_category_label)) },

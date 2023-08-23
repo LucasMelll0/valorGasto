@@ -34,6 +34,13 @@
     <string name="product_category_garden">Jardim</string>
     <string name="product_category_others">Outros</string>
 
+    <!-- Currencies Symbols -->
+    <string name="brl_symbol">R$</string>
+    <string name="usd_symbol">$</string>
+    <string name="eur_symbol">€</string>
+    <string name="cny_symbol">¥</string>
+    <string name="rub_symbol">₽</string>
+
     <!-- Product Form -->
     <string name="product_form_title">Novo Produto</string>
     <string name="product_form_name_label">Nome do Produto</string>

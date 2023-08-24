@@ -4,7 +4,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -61,7 +60,7 @@ fun AppOutlinedTextFieldTrailingMenu(
                 targetValue = if (!showExpandedDropdownMenu) 0f else 180f,
                 label = ""
             )
-            Column(Modifier.wrapContentWidth()) {
+            Column {
                 IconButton(onClick = { showExpandedDropdownMenu = !showExpandedDropdownMenu }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (!showSelectedOptionText) Text(text = selectedItem)

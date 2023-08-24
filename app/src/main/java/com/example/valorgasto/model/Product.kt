@@ -1,6 +1,5 @@
 package com.example.valorgasto.model
 
-import com.example.valorgasto.utils.Currency
 import com.example.valorgasto.utils.CurrencyAmountInputVisualTransformation
 import com.example.valorgasto.utils.ProductCategories
 import com.example.valorgasto.utils.UnitOfMeasurement
@@ -12,7 +11,6 @@ data class Product(
     val quantity: Int,
     val unitOfMeasurement: UnitOfMeasurement,
     val price: Long,
-    val currency: Currency,
     val category: ProductCategories
 ) {
     override fun toString(): String {

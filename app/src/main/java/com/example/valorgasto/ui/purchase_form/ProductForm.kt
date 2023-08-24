@@ -44,6 +44,7 @@ import com.example.valorgasto.utils.UnitOfMeasurement
 fun ProductForm(
     onDismiss: () -> Unit,
     onConfirm: (Product) -> Unit,
+    currency: Currency,
     modifier: Modifier = Modifier
 ) {
     Dialog(
@@ -64,7 +65,6 @@ fun ProductForm(
         var selectedUnitOfMeasurement by rememberSaveable { mutableStateOf(UnitOfMeasurement.values()[0]) }
         var productPrice by rememberSaveable { mutableStateOf("") }
         var productPriceTextFieldHasBeenUsed by rememberSaveable { mutableStateOf(false) }
-        var selectedCurrency by rememberSaveable { mutableStateOf(Currency.values()[0]) }
         val productPriceHasError = productPrice.isEmpty() && productPriceTextFieldHasBeenUsed
         var selectedCategory by rememberSaveable { mutableStateOf(ProductCategories.values()[0]) }
 
@@ -118,7 +118,7 @@ fun ProductForm(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     modifier = Modifier.fillMaxWidth()
                 )
-                AppOutlinedTextFieldTrailingMenu(
+                AppOutlinedTextField(
                     value = productPrice,
                     onValueChange = {
                         if (it.isDigitsOnly()) {
@@ -126,22 +126,12 @@ fun ProductForm(
                             productPriceTextFieldHasBeenUsed = true
                         }
                     },
-                    selectedItem = selectedCurrency.toString(),
-                    onItemSelection = { selected ->
-                        Currency.values().find {
-                            it.toString() == selected
-                        }?.let {
-                            selectedCurrency = it
-                        }
-                    },
-                    selectionChoices = Currency.values().map { it.toString() },
                     isError = productPriceHasError,
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Text(text = stringResource(id = selectedCurrency.getSymbolStringRes())) },
+                    leadingIcon = { Text(text = stringResource(id = currency.getSymbolStringRes())) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     label = { Text(text = stringResource(id = R.string.product_form_price_label)) },
                     visualTransformation = CurrencyAmountInputVisualTransformation(),
-                    showSelectedOptionText = true
                 )
                 AppExposedDropdownMenuBox(
                     label = { Text(text = stringResource(id = R.string.product_form_category_label)) },
@@ -178,7 +168,6 @@ fun ProductForm(
                                     quantity = productQuantity.toInt(),
                                     unitOfMeasurement = selectedUnitOfMeasurement,
                                     price = productPrice.toLong(),
-                                    currency = selectedCurrency,
                                     category = selectedCategory
                                 )
                                 onConfirm(product)
@@ -212,6 +201,6 @@ fun ProductForm(
 @Composable
 fun ProductFormPreview() {
     ValorGastoTheme {
-        ProductForm(onConfirm = {}, onDismiss = {})
+        ProductForm(onConfirm = {}, currency = Currency.BRL, onDismiss = {})
     }
 }

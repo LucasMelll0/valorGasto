@@ -178,6 +178,7 @@ fun ProductForm(
                                     quantity = productQuantity.toInt(),
                                     unitOfMeasurement = selectedUnitOfMeasurement,
                                     price = productPrice.toLong(),
+                                    currency = selectedCurrency,
                                     category = selectedCategory
                                 )
                                 onConfirm(product)

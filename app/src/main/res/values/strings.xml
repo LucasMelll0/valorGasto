@@ -8,12 +8,15 @@
     <string name="common_confirm">Confirmar</string>
     <string name="common_cancel">Cancelar</string>
     <string name="common_error_message">Ocorreu um erro!</string>
+    
+    <!-- Content Descriptions -->
+    <string name="content_description_go_back">Voltar</string>
 
     <!-- Units of Measurement -->
     <string name="unit_of_measurement_kilogram">Kg</string>
     <string name="unit_of_measurement_gram">g</string>
     <string name="unit_of_measurement_milligram">mg</string>
-    <string name="unit_of_measurement_unit">Unid</string>
+    <string name="unit_of_measurement_unit">Unidades</string>
     <string name="unit_of_measurement_liter">L</string>
     <string name="unit_of_measurement_milliliter">ml</string>
 

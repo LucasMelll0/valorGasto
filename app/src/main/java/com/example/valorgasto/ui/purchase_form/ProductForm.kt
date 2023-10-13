@@ -167,7 +167,7 @@ fun ProductForm(
                                     name = productName,
                                     quantity = productQuantity.toInt(),
                                     unitOfMeasurement = selectedUnitOfMeasurement,
-                                    price = productPrice.toLong(),
+                                    price = productPrice.toFloat(),
                                     category = selectedCategory
                                 )
                                 onConfirm(product)

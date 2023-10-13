@@ -10,7 +10,7 @@ data class Product(
     val name: String,
     val quantity: Int,
     val unitOfMeasurement: UnitOfMeasurement,
-    val price: Long,
+    val price: Float,
     val category: ProductCategories
 ) {
     override fun toString(): String {
